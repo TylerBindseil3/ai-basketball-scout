@@ -1,0 +1,9 @@
+.env
+
+# Video files (too large for GitHub)
+game_trimmed.mp4
+
+player_positions.csv
+
+data/videos/
+yolov8s.pt
