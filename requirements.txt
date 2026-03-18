@@ -1,0 +1,7 @@
+ultralytics
+opencv-python
+pandas
+python-dotenv
+requests
+scipy
+matplotlib

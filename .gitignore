@@ -7,3 +7,4 @@ player_positions.csv
 
 data/videos/
 yolov8s.pt
+.venv/
