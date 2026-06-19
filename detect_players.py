@@ -22,6 +22,9 @@ player_positions = []
 # Initializing frame counter
 frame_count = 0
 
+
+
+
 # Looping through the video frame by frame
 while video_capture.isOpened():
     frame_available, frame = video_capture.read()
@@ -33,19 +36,28 @@ while video_capture.isOpened():
 
     # If there is a frame run yolo detection on it
     if frame_count % 10 == 0:
-        results = yolo(frame, classes=[0], conf=.2)
+        results = yolo(frame, classes=[0], conf=.35)
 
+        # Collect all detections for this frame
+        frame_detections = []
         for box in results[0].boxes:
         # Get bounding box in center-x, center-y, width, height format
             x, y, w, h = box.xywh[0].cpu().numpy()
-        
-            # Save a dictionary for each box to list
+            frame_detections.append((float(x), float(y), float(w), float(h)))
+
+        # Keep only the top 12 largest detections by bounding box area
+        frame_detections.sort(key=lambda d: d[2] * d[3], reverse=True)
+        frame_detections = frame_detections[:12]
+
+        for x, y, w, h in frame_detections:
+            # Save bounding box for each detection
+            # Jersey colors are extracted later by reextract_colors.py
             player_positions.append({
                 'frame': frame_count,
-                'x': float(x),
-                'y': float(y),
-                'width': float(w),
-                'height': float(h)
+                'x': x,
+                'y': y,
+                'width': w,
+                'height': h,
             })
 
     if frame_count % 1000 == 0:
