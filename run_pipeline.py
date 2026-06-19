@@ -1,21 +1,9 @@
-"""
-AI Basketball Scout — Unified Pipeline
-=======================================
-Single entry point to run the full defensive analysis pipeline.
+"""Runs the full defensive analysis pipeline: detection, team classification,
+scheme analysis, validation, and report generation.
 
-Usage:
-    python run_pipeline.py                          # Run all steps
-    python run_pipeline.py --video path/to/video    # Use custom video
-    python run_pipeline.py --skip-detection          # Skip YOLO (reuse existing detections)
-    python run_pipeline.py --report-only             # Just regenerate the report from existing data
-
-Pipeline Steps:
-    1. detect_players.py    — YOLO player detection + initial color extraction
-    2. reextract_colors.py  — Improved jersey color extraction (torso band)
-    3. classify_teams.py    — K-Means team classification with IQR filtering
-    4. analyze_defense.py   — Defensive scheme analysis (possessions + GMM)
-    5. validate_defense.py  — Generate annotated validation frames
-    6. generate_report()    — Produce readable HTML report
+Flags:
+    --skip-detection   Reuse existing YOLO detections (skips the slowest step)
+    --report-only      Just regenerate the HTML report from existing analysis data
 """
 
 import subprocess
